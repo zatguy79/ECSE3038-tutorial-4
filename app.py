@@ -41,8 +41,16 @@ def create_device(device: Device):
 
 @app.put("/devices/{name}")
 def put_device(name: str, updated_device: Device):
-    for index, device in enumerate(readings):   #enumerate means u get the index of readings along with the device
-        if device["name"] == name:                 #device["name"] doesn't work as it isn't a dictionary
-            readings[index] = updated_device.model_dump()   #.model_dump() changes it to a dictionary
+    for index, device in enumerate(readings):   
+        if device["name"] == name:                 
+            readings[index] = updated_device.model_dump()  
             return readings[index]
     raise HTTPException(status_code=404, detail="No device called " + name)
+
+@app.delete("/devices/{name}")
+def delete_device(name: str):
+    for device in readings:                    
+        if device["name"] == name:                 
+            readings.remove(device)
+            return {"deleted" : name }
+    raise HTTPException(status_code=404, detail = f"No device called {name}")
