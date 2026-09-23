@@ -54,3 +54,5 @@ def delete_device(name: str):
             readings.remove(device)
             return {"deleted" : name }
     raise HTTPException(status_code=404, detail = f"No device called {name}")
+
+
